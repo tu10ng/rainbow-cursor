@@ -4,16 +4,22 @@ make your cursor rgb!
 +to improve your coding effectiveness+
 
 * usage
-add this directory to your load-path, and then require, example:
+add this directory to your load-path, and then require
+example:
 #+begin_src emacs-lisp
 (add-to-list 'load-path "~/.emacs.d/site-lisp/rgb-cursor/")
 (require 'rgb-cursor)
 
 #+end_src
+then try ~M-x rgb-cursor-mode~
 
-currently this package is enabled global wide. to disable this mode use "M-x rgb-cursor-disable".
+to enable rgb-cursor-mode on startup, add this to your init file:
+#+begin_src emacs-lisp
+(rgb-cursor-mode 1)
+#+end_src
 
+* known errors
 This package wont work under terminal.
 
 * improvements needed
-** TODO add here
+** TODO 
