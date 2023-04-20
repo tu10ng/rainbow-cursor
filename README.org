@@ -1,12 +1,17 @@
+* rgb cursor
+make your cursor rgb!
+
++to improve your coding effectiveness+
+
 * usage
 add this directory to your load-path, and then require, example:
 #+begin_src emacs-lisp
-(add-to-list 'load-path "~/.emacs.d/site-lisp/rainbow-cursor/")
-(require 'rainbow-cursor)
+(add-to-list 'load-path "~/.emacs.d/site-lisp/rgb-cursor/")
+(require 'rgb-cursor)
 
 #+end_src
 
-currently this package is enabled global wide. to disable this mode use "M-x rainbow-cursor-disable".
+currently this package is enabled global wide. to disable this mode use "M-x rgb-cursor-disable".
 
 This package wont work under terminal.
 
