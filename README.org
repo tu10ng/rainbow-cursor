@@ -3,6 +3,7 @@ make your cursor rgb!
 
 +to improve your coding effectiveness+
 
+the code is ugly and need refactor/improvements, issues and prs are very welcome
 * usage
 add this directory to your load-path, and then require
 example:
@@ -19,7 +20,10 @@ to enable rgb-cursor-mode on startup, add this to your init file:
 #+end_src
 
 * known errors
-This package wont work under terminal.
+- This package wont work under terminal.
 
 * improvements needed
-** TODO 
+- the logic of `rgb-cursor-enable'
+- the method of store/restore config
+- i dont know how to remove `rgb-cursor-color-pointer' from  `rgb-cursor-change-color'
+  
