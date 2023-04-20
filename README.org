@@ -18,7 +18,8 @@ to enable rgb-cursor-mode on startup, add this to your init file:
 #+begin_src emacs-lisp
 (rgb-cursor-mode 1)
 #+end_src
-
+* useful functions
+- ~rgb-cursor-current-color~: returns current cursor color
 * known errors
 - This package wont work under terminal.
 

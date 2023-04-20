@@ -66,13 +66,19 @@ This mode is enabled globally."
   :init-value nil
   :global t
   (if rgb-cursor-mode
-      (rgb-cursor-enable)
-    (rgb-cursor-disable)))
+      (rgb-cursor--enable)
+    (rgb-cursor--disable)))
 
 
 ;; utils
+(defun rgb-cursor-current-color ()
+  "can be used with other packages.
+another usage is to restore previous color on disable"
+  (face-background 'cursor))
 
-(defun rgb-cursor-change-color ()
+
+;; inner functions
+(defun rgb-cursor--change-color ()
   "Take a color from `rgb-color-list' by `rgb-cursor--color-counter'
 increase `rgb-cursor--color-counter', and loop back by taking mod over its length."
   (setq rgb-cursor--color-counter (% (1+ rgb-cursor--color-counter)
@@ -81,42 +87,37 @@ increase `rgb-cursor--color-counter', and loop back by taking mod over its lengt
                     rgb-cursor--color-counter)))
     (set-cursor-color color)))
 
-
-(defun rgb-cursor-previous-color ()
-  "used to restore previous color on disable"
-  (face-background 'cursor))
-
-(defun rgb-cursor-store-config ()
+(defun rgb-cursor--store-config ()
   "store some config in `rgb-cursor--previous-config'"
   (setcdr (assq 'cursor-color rgb-cursor--previous-config)
-          (rgb-cursor-previous-color))
+          (rgb-cursor-current-color))
   (setcdr (assq 'blink-cursor-mode rgb-cursor--previous-config)
           (if blink-cursor-mode
               1
             ;; we need -1 instead of nil
             -1)))
 
-(defun rgb-cursor-restore-config ()
+(defun rgb-cursor--restore-config ()
   (set-cursor-color (alist-get 'cursor-color rgb-cursor--previous-config))
   (blink-cursor-mode (alist-get 'blink-cursor-mode rgb-cursor--previous-config)))
 
-(defun rgb-cursor-disable ()
+(defun rgb-cursor--disable ()
   "remove the timer stored in `rgb-cursor--timer'"
-  (rgb-cursor-restore-config)
+  (rgb-cursor--restore-config)
   (when rgb-cursor--timer
     (cancel-timer rgb-cursor--timer)
     (setq rgb-cursor--timer nil)))
 
-(defun rgb-cursor-enable ()
+(defun rgb-cursor--enable ()
   "change blink-cursor-mode, and add the timer"
-  (rgb-cursor-store-config)
+  (rgb-cursor--store-config)
   (blink-cursor-mode -1)
   ;; need cancel previous timer or multiple timer will be established
   (when rgb-cursor--timer
     (cancel-timer rgb-cursor--timer)
     (setq rgb-cursor--timer nil))
   (setq rgb-cursor--timer
-        (run-with-timer 0 0.05 #'rgb-cursor-change-color)))
+        (run-with-timer 0 0.05 #'rgb-cursor--change-color)))
 
 
 ;;; Finish up
